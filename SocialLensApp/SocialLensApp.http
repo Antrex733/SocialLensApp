@@ -1,0 +1,6 @@
+@SocialLensApp_HostAddress = http://localhost:5023
+
+GET {{SocialLensApp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
