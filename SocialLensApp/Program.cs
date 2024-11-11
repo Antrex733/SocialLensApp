@@ -15,7 +15,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly).AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly)
+    .AddFluentValidationAutoValidation();
 
 
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

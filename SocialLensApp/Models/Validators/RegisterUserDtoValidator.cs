@@ -12,7 +12,7 @@ namespace SocialLensApp.Models.Validators
                 .EmailAddress()
                 .NotEmpty();
             RuleFor(x => x.Mail)
-                .Custom((value,context)=>
+                .Custom((value,context) =>
                 {
                     var isTaken = dbContext.Users.Any(u => u.Mail == value);
                     if(isTaken)
@@ -21,7 +21,7 @@ namespace SocialLensApp.Models.Validators
                     }
                 });
             RuleFor(x => x.Username)
-                .Custom((value, context)=>
+                .Custom((value, context) =>
                 {
                     var isTaken = dbContext.Users.Any (u => u.Username == value);
                     if(isTaken)

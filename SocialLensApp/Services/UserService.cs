@@ -21,10 +21,12 @@ namespace SocialLensApp.Services
         }
         public async Task RegisterUser(RegisterUserDto dto)
         {
-            bool b = await _context.Database.CanConnectAsync();
             var addUser = _mapper.Map<User>(dto);
+
             var hashedPassword = _hasher.HashPassword(addUser, dto.Password);
             addUser.HashPassword = hashedPassword;
+
+
             await _context.AddAsync(addUser);
             await _context.SaveChangesAsync();
         }

@@ -19,7 +19,7 @@ namespace SocialLensApp.Controllers
         public IActionResult RegisterUser([FromBody]RegisterUserDto dto)
         {
             _userService.RegisterUser(dto);
-            return Ok(  );
+            return Ok();
         }
 
     }
