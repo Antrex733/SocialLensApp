@@ -22,5 +22,12 @@ namespace SocialLensApp.Controllers
             return Ok();
         }
 
+        [HttpPost("login")]
+        public IActionResult LogInUser([FromBody] LogInUserDto dto)
+        {
+            var token = _userService.LogInUser(dto);
+            return Ok(token);
+        }
+
     }
 }
