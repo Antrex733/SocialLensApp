@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.AspNetCore.Mvc;
 using SocialLensApp.Models;
 using SocialLensApp.Services.Interfaces;
 
@@ -21,13 +22,20 @@ namespace SocialLensApp.Controllers
             _userService.RegisterUser(dto);
             return Ok();
         }
-
         [HttpPost("login")]
         public IActionResult LogInUser([FromBody] LogInUserDto dto)
         {
-            var token = _userService.LogInUser(dto);
+            var token =_userService.LogInUser(dto);
             return Ok(token);
         }
+
+        [HttpDelete("delete")]
+        public IActionResult deleteAccount()
+        {
+            _userService.DeleteAccount();
+            return Ok();
+        }
+        
 
     }
 }

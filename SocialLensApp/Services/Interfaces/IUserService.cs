@@ -8,6 +8,8 @@ namespace SocialLensApp.Services.Interfaces
 
         string LogInUser(LogInUserDto logInUserDto);
 
+        void DeleteAccount();
+
     }
 
 
