@@ -9,6 +9,7 @@ namespace SocialLensApp.Exceptions
             (int statusCode, string errorMessage) = exception switch
             {
                 BadRequestException badRequestException => (400, badRequestException.Message),
+                NotFoundException notFoundException => (404, notFoundException.Message),
 
                 _ => (500, "Something went wrong"),
             };

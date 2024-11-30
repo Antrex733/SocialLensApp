@@ -20,13 +20,15 @@ namespace SocialLensApp.Services
         private readonly IPasswordHasher<User> _hasher;
         private readonly SocialLensDbContext _context;
         private readonly AuthenticationSettings _authentication;
+        private readonly IUserContextService _contextAccessor;
 
-        public UserService(IMapper mapper, IPasswordHasher<User> hasher, SocialLensDbContext context, AuthenticationSettings authentication)
+        public UserService(IMapper mapper, IPasswordHasher<User> hasher, SocialLensDbContext context, AuthenticationSettings authentication, IUserContextService contextAccessor)
         {
             _mapper = mapper;
             _hasher = hasher;
             _context = context;
             _authentication = authentication;
+            _contextAccessor = contextAccessor;
         }
         public async Task RegisterUser(RegisterUserDto dto)
         {
@@ -69,6 +71,18 @@ namespace SocialLensApp.Services
             return tokenHandler.WriteToken(token);
         }
 
+        public void DeleteAccount()
+        {
+            var Id = _contextAccessor.getUserId;
+            var User = _context.Users.FirstOrDefault(x => x.Id == Id);
+            if(User == null)
+            {
+                throw new NotFoundException("No account found");
+            }
+            _context.Users.Remove(User);
+            _context.SaveChanges();
+            
+        }
 
     }
 }
