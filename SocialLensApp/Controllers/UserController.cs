@@ -29,5 +29,13 @@ namespace SocialLensApp.Controllers
             return Ok(token);
         }
 
+        [HttpDelete("delete")]
+        public IActionResult deleteAccount()
+        {
+            _userService.DeleteAccount();
+            return Ok();
+        }
+        
+
     }
 }

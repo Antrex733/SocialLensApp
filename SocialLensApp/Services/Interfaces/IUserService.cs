@@ -7,8 +7,10 @@ namespace SocialLensApp.Services.Interfaces
         Task RegisterUser(RegisterUserDto dto);
 
         string LogInUser(LogInUserDto logInUserDto);
-        
+
+        void DeleteAccount();
+
     }
 
-    
+
 }

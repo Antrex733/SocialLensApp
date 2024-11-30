@@ -20,13 +20,15 @@ namespace SocialLensApp.Services
         private readonly IPasswordHasher<User> _hasher;
         private readonly SocialLensDbContext _context;
         private readonly AuthenticationSettings _authentication;
+        private readonly IUserContextService _contextAccessor;
 
-        public UserService(IMapper mapper, IPasswordHasher<User> hasher, SocialLensDbContext context, AuthenticationSettings authentication)
+        public UserService(IMapper mapper, IPasswordHasher<User> hasher, SocialLensDbContext context, AuthenticationSettings authentication, IUserContextService contextAccessor)
         {
             _mapper = mapper;
             _hasher = hasher;
             _context = context;
             _authentication = authentication;
+            _contextAccessor = contextAccessor;
         }
         public async Task RegisterUser(RegisterUserDto dto)
         {
@@ -41,13 +43,13 @@ namespace SocialLensApp.Services
         }
         public string LogInUser(LogInUserDto dto)
         {
-            var user= _context.Users.FirstOrDefault(x => x.Mail==dto.Mail);
-            if (user==null)
+            var user = _context.Users.FirstOrDefault(x => x.Mail == dto.Mail);
+            if (user == null)
             {
                 throw new BadRequestException("Invalid mail or password");
             }
             var result = _hasher.VerifyHashedPassword(user, user.HashPassword, dto.Password);
-            if(result==PasswordVerificationResult.Failed)
+            if (result == PasswordVerificationResult.Failed)
             {
                 throw new BadRequestException("Invalid mail or password");
             }
@@ -57,18 +59,30 @@ namespace SocialLensApp.Services
                 new Claim(ClaimTypes.Email, user.Mail)
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_authentication.JWTKey));
-            var cred = new SigningCredentials(key,SecurityAlgorithms.HmacSha256);
-            var expires =  DateTime.Now.AddDays(_authentication.JWTExpireDays);
+            var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expires = DateTime.Now.AddDays(_authentication.JWTExpireDays);
 
             var token = new JwtSecurityToken(_authentication.JWTIssuer,
                 _authentication.JWTIssuer,
                 claims,
-                expires:  expires,
-                signingCredentials:  cred);
+                expires: expires,
+                signingCredentials: cred);
             var tokenHandler = new JwtSecurityTokenHandler();
             return tokenHandler.WriteToken(token);
         }
 
-        
+        public void DeleteAccount()
+        {
+            var Id = _contextAccessor.getUserId;
+            var User = _context.Users.FirstOrDefault(x => x.Id == Id);
+            if(User == null)
+            {
+                throw new NotFoundException("No account found");
+            }
+            _context.Users.Remove(User);
+            _context.SaveChanges();
+            
+        }
+
     }
 }

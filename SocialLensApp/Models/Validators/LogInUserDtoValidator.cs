@@ -3,7 +3,7 @@ using SocialLensApp.Data;
 
 namespace SocialLensApp.Models.Validators
 {
-    public class LogInUserDtoValidator :AbstractValidator<LogInUserDto>
+    public class LogInUserDtoValidator : AbstractValidator<LogInUserDto>
     {
         public LogInUserDtoValidator(SocialLensDbContext dbContext)
         {
@@ -11,6 +11,6 @@ namespace SocialLensApp.Models.Validators
             RuleFor(x => x.Password).NotEmpty();
 
         }
-        
+
     }
 }
