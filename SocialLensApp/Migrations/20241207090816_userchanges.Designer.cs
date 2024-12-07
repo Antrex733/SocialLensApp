@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialLensApp.Data;
 
@@ -11,9 +12,11 @@ using SocialLensApp.Data;
 namespace SocialLensApp.Migrations
 {
     [DbContext(typeof(SocialLensDbContext))]
-    partial class SocialLensDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241207090816_userchanges")]
+    partial class userchanges
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,10 +117,6 @@ namespace SocialLensApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("BlockedList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime?>("DateOfBirth")
                         .HasColumnType("datetime2");
 
@@ -127,23 +126,11 @@ namespace SocialLensApp.Migrations
                     b.Property<int>("FollowedAmount")
                         .HasColumnType("int");
 
-                    b.Property<string>("FollowedList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("FollowersAmount")
                         .HasColumnType("int");
 
-                    b.Property<string>("FollowersList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("FriendsAmount")
                         .HasColumnType("int");
-
-                    b.Property<string>("FriendsList")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HashPassword")
                         .IsRequired()

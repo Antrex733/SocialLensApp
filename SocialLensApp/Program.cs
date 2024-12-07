@@ -6,6 +6,7 @@ using Microsoft.IdentityModel.Tokens;
 using SocialLensApp.Authentication;
 using SocialLensApp.Data;
 using SocialLensApp.Entities;
+using SocialLensApp.Exceptions;
 using SocialLensApp.Models;
 using SocialLensApp.Models.Validators;
 using SocialLensApp.Services;
@@ -56,6 +57,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IValidator<LogInUserDto>, LogInUserDtoValidator>();
+builder.Services.AddExceptionHandler<ExceptionsHandler>();
 
 builder.Services.AddScoped<IUserContextService, UserContextService>();
 builder.Services.AddHttpContextAccessor();
