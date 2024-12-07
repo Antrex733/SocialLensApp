@@ -35,6 +35,13 @@ namespace SocialLensApp.Controllers
             _userService.DeleteAccount();
             return Ok();
         }
+
+        [HttpPatch("follow/{id}")]
+        public IActionResult followAccount([FromRoute] int id)
+        {
+            _userService.FollowAccount(id);
+            return Ok();
+        }
         
 
     }

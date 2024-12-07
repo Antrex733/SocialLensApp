@@ -38,7 +38,7 @@ namespace SocialLensApp.Services
             addUser.HashPassword = hashedPassword;
 
 
-            await _context.AddAsync(addUser);
+            await _context.Users.AddAsync(addUser);
             await _context.SaveChangesAsync();
         }
         public string LogInUser(LogInUserDto dto)
@@ -82,6 +82,27 @@ namespace SocialLensApp.Services
             _context.Users.Remove(User);
             _context.SaveChanges();
             
+        }
+
+        public void FollowAccount(int id)
+        {
+            var Id = _contextAccessor.getUserId;
+            var User = _context.Users.FirstOrDefault(x => x.Id == id);
+            var User2 = _context.Users.FirstOrDefault(y => y.Id == Id);
+            if(User == null || User.BlockedList.Contains(User2.Id))
+            {
+                throw new NotFoundException("No account found");
+            }
+            if(User.FollowersList.Contains(User2.Id))
+            {
+                throw new BadRequestException($"{User.Username} is already followed  by you");
+            }
+            User2.FollowedList.Add(User.Id);
+            User.FollowersList.Add(User2.Id);
+            User2.FollowedAmount = User2.FollowedList.Count;
+            User.FollowersAmount = User.FollowersList.Count;
+            
+            _context.SaveChanges();
         }
 
     }

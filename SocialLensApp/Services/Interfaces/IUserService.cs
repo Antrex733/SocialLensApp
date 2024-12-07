@@ -10,6 +10,8 @@ namespace SocialLensApp.Services.Interfaces
 
         void DeleteAccount();
 
+        void FollowAccount(int id);
+
     }
 
 
