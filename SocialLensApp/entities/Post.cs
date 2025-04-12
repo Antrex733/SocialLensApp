@@ -9,5 +9,7 @@
         public int CommentAmount { get; set; }
         public int PostCreatorId { get; set; }
         public List<Comment> CommentList { get; set; } = new();
+        public string Title { get; set; }
+        public string ImagePath { get; set; }
     }
 }

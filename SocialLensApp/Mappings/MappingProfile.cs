@@ -9,6 +9,11 @@ namespace SocialLensApp.Mappings
         public MappingProfile()
         {
             CreateMap<RegisterUserDto, User>();
+            CreateMap<Invite, InviteDto>();
+            CreateMap<User, UserDto>();
+            CreateMap<CreatePostDto,Post >();
+            CreateMap<Post, PostDto>();
+            CreateMap<Post, EditPostDto>();
         }
     }
 }
