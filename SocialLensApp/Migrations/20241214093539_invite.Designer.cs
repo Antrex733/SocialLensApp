@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialLensApp.Data;
 
@@ -11,9 +12,11 @@ using SocialLensApp.Data;
 namespace SocialLensApp.Migrations
 {
     [DbContext(typeof(SocialLensDbContext))]
-    partial class SocialLensDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241214093539_invite")]
+    partial class invite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -93,19 +96,11 @@ namespace SocialLensApp.Migrations
                     b.Property<int>("DislikeAmount")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("LikeAmount")
                         .HasColumnType("int");
 
                     b.Property<int>("PostCreatorId")
                         .HasColumnType("int");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("UserId")
                         .HasColumnType("int");
@@ -195,13 +190,11 @@ namespace SocialLensApp.Migrations
 
             modelBuilder.Entity("SocialLensApp.Entities.Invite", b =>
                 {
-                    b.HasOne("SocialLensApp.Entities.User", "User")
+                    b.HasOne("SocialLensApp.Entities.User", null)
                         .WithMany("InvitesList")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SocialLensApp.Entities.Post", b =>
