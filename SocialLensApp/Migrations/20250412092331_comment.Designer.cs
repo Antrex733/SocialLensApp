@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SocialLensApp.Data;
 
@@ -11,9 +12,11 @@ using SocialLensApp.Data;
 namespace SocialLensApp.Migrations
 {
     [DbContext(typeof(SocialLensDbContext))]
-    partial class SocialLensDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250412092331_comment")]
+    partial class comment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,14 +33,14 @@ namespace SocialLensApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CommentId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CreatorId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ParentCommentId")
                         .HasColumnType("int");
 
                     b.Property<int>("PostId")
@@ -54,7 +57,7 @@ namespace SocialLensApp.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ParentCommentId");
+                    b.HasIndex("CommentId");
 
                     b.HasIndex("PostId");
 
@@ -188,18 +191,15 @@ namespace SocialLensApp.Migrations
 
             modelBuilder.Entity("SocialLensApp.Entities.Comment", b =>
                 {
-                    b.HasOne("SocialLensApp.Entities.Comment", "ParentComment")
+                    b.HasOne("SocialLensApp.Entities.Comment", null)
                         .WithMany("ReplyList")
-                        .HasForeignKey("ParentCommentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("CommentId");
 
                     b.HasOne("SocialLensApp.Entities.Post", null)
                         .WithMany("CommentList")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ParentComment");
                 });
 
             modelBuilder.Entity("SocialLensApp.Entities.Invite", b =>

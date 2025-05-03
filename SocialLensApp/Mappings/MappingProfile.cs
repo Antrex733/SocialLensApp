@@ -14,6 +14,7 @@ namespace SocialLensApp.Mappings
             CreateMap<CreatePostDto,Post >();
             CreateMap<Post, PostDto>();
             CreateMap<Post, EditPostDto>();
+            CreateMap<CommentDto, Comment>();
         }
     }
 }

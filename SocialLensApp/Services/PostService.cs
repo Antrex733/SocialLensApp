@@ -65,9 +65,11 @@ namespace SocialLensApp.Services
         public void DeletePost(int id)
         {
             var post = _context.Posts.FirstOrDefault(i => i.Id == id);
-            _context.Remove(post);
-            _context.SaveChanges();
+            var comments = _context.Comments.Where(i => i.PostId == id).ToList();
             
+            _context.RemoveRange(comments);
+            _context.Posts.Remove(post);
+            _context.SaveChanges();
         }
     }
 }
