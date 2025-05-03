@@ -52,5 +52,12 @@ namespace SocialLensApp.Controllers
             return Created();
         }
 
+        [HttpDelete("deletecomment/{id}")]
+        public IActionResult DeleteComment([FromRoute] int id)
+        {
+            _commentService.DeleteComment(id);
+            return NoContent();
+        }
+
     }
 }

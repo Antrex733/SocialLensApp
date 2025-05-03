@@ -80,5 +80,19 @@ namespace SocialLensApp.Services
             _context.SaveChanges();
         }
 
+        public void DeleteComment(int id)
+        {
+            var comment = _context.Comments.FirstOrDefault(i => i.Id == id);
+            var post = _context.Posts.FirstOrDefault(i => i.Id == comment.PostId);
+            var parentComment = _context.Comments.FirstOrDefault(i => i.Id == comment.ParentCommentId);
+            var replies = _context.Comments.Where(i => i.ParentCommentId == id).ToList();
+            
+            parentComment.ReplyAmount--;
+            post.CommentAmount--;
+            
+            _context.RemoveRange(replies);
+            _context.Remove(comment);
+            _context.SaveChanges();
+        }
     }
 }

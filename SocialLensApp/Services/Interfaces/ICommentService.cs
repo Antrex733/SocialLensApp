@@ -8,7 +8,7 @@ namespace SocialLensApp.Services.Interfaces
         void EditComment(int id, CommentDto editCommentDto);
         void LikeComment(int id);
         void DislikeComment(int id);
-
         void ReplyComment(int id, CommentDto replyCommentDto);
+        void DeleteComment(int id);
     }
 }
