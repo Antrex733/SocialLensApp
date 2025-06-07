@@ -56,6 +56,8 @@ builder.Services.AddDbContext<SocialLensDbContext>(options =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+//builder.Services.AddScoped<IMessageService, MessageService>();
+builder.Services.AddSingleton<WebsocketChatHandler>();
 builder.Services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 builder.Services.AddScoped<IValidator<LogInUserDto>, LogInUserDtoValidator>();
@@ -79,6 +81,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseWebSockets();
 
 app.MapControllers();
 

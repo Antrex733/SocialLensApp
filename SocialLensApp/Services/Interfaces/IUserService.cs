@@ -17,8 +17,7 @@ namespace SocialLensApp.Services.Interfaces
 
         Task AcceptFriendRequest(int id);
 
-        List<InviteDto> showFriendRequests();
-
+        List<InviteDto> ShowFriendRequests();
         void DenyFriendRequest(int id);
         void Block(int id);
         List <int> ShowBLockedList();
@@ -26,6 +25,8 @@ namespace SocialLensApp.Services.Interfaces
         void RemoveFriend(int id);
         void Unfollow(int id);
         List<UserDto> SearchUser(string search);
+        //dodac edycje profilu
+       
     }
 
 

@@ -145,7 +145,7 @@ namespace SocialLensApp.Services
             
         }
 
-        public List<InviteDto> showFriendRequests()
+        public List<InviteDto> ShowFriendRequests()
         {
             var id = _contextAccessor.getUserId;
             var inviteDtos = _context.Invites

@@ -66,7 +66,7 @@ namespace SocialLensApp.Controllers
         [HttpGet("showfriendrequests")]
         public IActionResult showFriendRequests()
         {
-            var inviteList = _userService.showFriendRequests();
+            var inviteList = _userService.ShowFriendRequests();
             return Ok(inviteList);
         }
 
